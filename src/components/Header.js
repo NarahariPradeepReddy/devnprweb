@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { AppBar, Toolbar, IconButton, Typography, Drawer, List, ListItem, ListItemText, Button } from "@mui/material";
+import { AppBar, Toolbar, IconButton, Typography, Drawer, List, ListItem, ListItemText, Button, Box } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
+import Logo from "../assets/logo.jpg";
 
 const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -18,47 +19,34 @@ const Header = () => {
           edge="start"
           color="inherit"
           aria-label="menu"
-          sx={{ display: { sm: "none" } }} 
+          sx={{ display: { sm: "none" } }}
           onClick={() => toggleDrawer(true)}
         >
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
-        DesignbyNarahari
-        </Typography>
 
+        {/* Logo */}
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <img src={Logo} alt="Logo" style={{ height: "40px", marginRight: "10px" }} />
+          <Typography variant="h6">DesignbyNarahari</Typography>
+        </Box>
 
         {/* Desktop Navigation Links */}
-        <div style={{ display: "flex", gap: "15px", marginLeft: "auto", display: { xs: "none", sm: "block" } }}>
+        <Box sx={{ display: { xs: "none", sm: "flex" }, gap: "15px", marginLeft: "auto" }}>
           <Button color="inherit" component={Link} to="/">Home</Button>
           <Button color="inherit" component={Link} to="/about">About</Button>
           <Button color="inherit" component={Link} to="/portfolio">Portfolio</Button>
           <Button color="inherit" component={Link} to="/contact">Contact</Button>
-        </div>
+        </Box>
 
         {/* Mobile Drawer Menu */}
         <Drawer anchor="right" open={drawerOpen} onClose={() => toggleDrawer(false)}>
           <List>
-            <ListItem button onClick={() => toggleDrawer(false)}>
-              <ListItemText>
-                <Button color="inherit" component={Link} to="/">Home</Button>
-              </ListItemText>
-            </ListItem>
-            <ListItem button onClick={() => toggleDrawer(false)}>
-              <ListItemText>
-                <Button color="inherit" component={Link} to="/about">About</Button>
-              </ListItemText>
-            </ListItem>
-            <ListItem button onClick={() => toggleDrawer(false)}>
-              <ListItemText>
-                <Button color="inherit" component={Link} to="/portfolio">Portfolio</Button>
-              </ListItemText>
-            </ListItem>
-            <ListItem button onClick={() => toggleDrawer(false)}>
-              <ListItemText>
-                <Button color="inherit" component={Link} to="/contact">Contact</Button>
-              </ListItemText>
-            </ListItem>
+            {["Home", "About", "Portfolio", "Contact"].map((text, index) => (
+              <ListItem key={index} component={Link} to={`/${text.toLowerCase()}`} onClick={() => toggleDrawer(false)}>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
           </List>
         </Drawer>
       </Toolbar>
