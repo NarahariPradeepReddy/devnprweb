@@ -8,6 +8,7 @@ import {
   List,
   ListItem,
 } from "@mui/material";
+import Logo from "../assets/logo.jpg"
 
 export default function Portfolio() {
   const projects = [
@@ -55,8 +56,9 @@ export default function Portfolio() {
     <Box
       sx={{
         padding: 3,
-        background:
-          "linear-gradient(45deg, #ffffff, #e0e0e0, #a9a9a9, #6e6e6e)",
+        backgroundImage: `linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url(${Logo})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
         animation: "backgroundAnimation 10s ease infinite",
         "@keyframes backgroundAnimation": {
           "0%": { backgroundPosition: "0% 50%" },

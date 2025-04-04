@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Typography, Grid, Paper, Button, Avatar } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Prpic from '../assets/Prpic1.png'
+import Logo from "../assets/logo.jpg";
 
 export default function Home() {
   return (
@@ -14,22 +15,11 @@ export default function Home() {
         alignItems: 'center',
         minHeight: '100vh',
         background: 'linear-gradient(45deg, #ffffff, #e0e0e0, #a9a9a9, #6e6e6e)',
+        backgroundImage: `linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url(${Logo})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
       }}
     >
-{/* 
-<Box sx={{ marginBottom: 4 }}>
-        <img 
-          src={Prpic} 
-          alt="Narahari Pradeep Kumar Reddy"
-          style={{
-            width: '150px',
-            height: '150px',
-            borderRadius: '50%',
-            objectFit: 'cover',
-            border: '3px solid #ffffff',
-          }}
-        />
-      </Box> */}
 
       <Grid container justifyContent="center" sx={{ textAlign: 'center', marginBottom: 4 }}>
         <Grid item xs={12} sm={8} md={6}>
@@ -46,7 +36,12 @@ export default function Home() {
             <Button
               variant="contained"
               color="primary"
-              sx={{ mt: 3 }}
+              sx={{ mt: 3,
+                "&:hover": {
+                  backgroundColor: "#fff",
+                  color: "blue"
+                }
+               }}
               component={Link} to="/about" 
             >
               Learn More About Me
@@ -67,7 +62,12 @@ export default function Home() {
             <Button
               variant="outlined"
               color="primary"
-              sx={{ mt: 3 }}
+              sx={{ mt: 3,
+                "&:hover": {
+                  backgroundColor: "#1565c0",
+                  color: "#fff"
+                }
+               }}
               component={Link} to="/about" 
             >
               Read My Story
@@ -87,7 +87,11 @@ export default function Home() {
             <Button
               variant="outlined"
               color="primary"
-              sx={{ mt: 3 }}
+              sx={{ mt: 3,
+                 "&:hover": {
+                  backgroundColor: "#1565c0",
+                  color: "#fff"
+                } }}
               component={Link} to="/portfolio" 
             >
               View Portfolio
@@ -107,7 +111,12 @@ export default function Home() {
             <Button
               variant="outlined"
               color="primary"
-              sx={{ mt: 3 }}
+              sx={{ mt: 3,
+                "&:hover": {
+                  backgroundColor: "#1565c0",
+                  color: "#fff"
+                }
+               }}
               component={Link} to="/contact"
             >
               Get in Touch

@@ -1,14 +1,16 @@
 import React from "react";
 import { Typography, Box, Divider, Chip, Button, Grid } from "@mui/material";
 import { Link } from "react-router-dom"; // If using React Router for navigation
+import Logo from "../assets/logo.jpg";
 
 export default function About() {
   return (
     <Box
       sx={{
         padding: 4,
-        background:
-          "linear-gradient(45deg, #ffffff, #e0e0e0, #a9a9a9, #bab5b5)",
+        backgroundImage: `linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url(${Logo})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
         animation: "backgroundAnimation 10s ease infinite",
         "@keyframes backgroundAnimation": {
           "0%": { backgroundPosition: "0% 50%" },
