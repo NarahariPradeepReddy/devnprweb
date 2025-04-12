@@ -41,13 +41,22 @@ const Header = () => {
 
         {/* Mobile Drawer Menu */}
         <Drawer anchor="right" open={drawerOpen} onClose={() => toggleDrawer(false)}>
-          <List>
-            {["Home", "About", "Portfolio", "Contact"].map((text, index) => (
-              <ListItem key={index} component={Link} to={`/${text.toLowerCase()}`} onClick={() => toggleDrawer(false)}>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
+        <List>
+  {["Home", "About", "Portfolio", "Contact"].map((text, index) => {
+    const path = text === "Home" ? "/" : `/${text.toLowerCase()}`;
+    return (
+      <ListItem
+        button
+        key={index}
+        component={Link}
+        to={path}
+        onClick={() => toggleDrawer(false)}
+      >
+        <ListItemText primary={text} />
+      </ListItem>
+    );
+  })}
+</List>
         </Drawer>
       </Toolbar>
     </AppBar>

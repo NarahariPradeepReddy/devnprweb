@@ -8,6 +8,8 @@ import {
 } from "@mui/material";
 import emailjs from "emailjs-com";
 import Logo from "../assets/logo.jpg";
+import { db } from "../firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -37,32 +39,63 @@ export default function Contact() {
     }
   };
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+
+  //   emailjs
+  //     .sendForm(
+  //       "service_s414jhu",
+  //       "template_cbr07in",
+  //       e.target,
+  //       "7ppHo-4BBaJ1RLagy"
+  //     )
+  //     .then(
+  //       (result) => {
+  //         console.log(result.text);
+  //         alert("Message sent successfully!");
+  //         setFormData({ name: "", email: "", message: "" });
+  //         setLoading(false);
+  //       },
+  //       (error) => {
+  //         console.error(error.text);
+  //         alert("Failed to send the message. Please try again.");
+  //         setLoading(false);
+  //       }
+  //     );
+  // };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
-    emailjs
-      .sendForm(
+  
+    try {
+      // Send email via EmailJS
+      await emailjs.sendForm(
         "service_s414jhu",
         "template_cbr07in",
         e.target,
         "7ppHo-4BBaJ1RLagy"
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-          alert("Message sent successfully!");
-          setFormData({ name: "", email: "", message: "" });
-          setLoading(false);
-        },
-        (error) => {
-          console.error(error.text);
-          alert("Failed to send the message. Please try again.");
-          setLoading(false);
-        }
       );
+  
+      // Save to Firestore
+      await addDoc(collection(db, "messages"), {
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        createdAt: serverTimestamp()
+      });
+  
+      alert("Message sent and saved to database!");
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      console.error("Submission error:", error);
+      alert("Failed to send the message. Please try again.");
+    }
+  
+    setLoading(false);
   };
-
+  
   return (
     <Box
       sx={{

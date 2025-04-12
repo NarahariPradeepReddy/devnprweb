@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import Home from './Pages/Home';
 import About from './Pages/About';
@@ -6,8 +6,29 @@ import Contact from './Pages/Contact';
 import Portfolio from './Pages/Portfolio';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import AdminLogin from './Pages/AdminLogin';
+import AdminDashboard from './Pages/AdminDashboard';
+import { doc, setDoc, deleteDoc } from "firebase/firestore";
+import { db } from "./firebase";
+import { v4 as uuidv4 } from "uuid";
 
 const router = createHashRouter([
+  {
+    path: "/admin",
+    element: (
+      <>
+      <AdminLogin />
+      </>
+    )
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <>
+      <AdminDashboard />
+      </>
+    )
+  },
   {
     path: "/",
     element: (
@@ -60,6 +81,29 @@ const router = createHashRouter([
 });
 
 function App() {
+  useEffect(() => {
+    const sessionId = uuidv4();
+    const sessionRef = doc(db, "sessions", sessionId);
+
+    const startSession = async () => {
+      await setDoc(sessionRef, {
+        startedAt: new Date(),
+        userAgent: navigator.userAgent,
+      });
+    };
+
+    const endSession = async () => {
+      await deleteDoc(sessionRef);
+    };
+
+    startSession();
+
+    window.addEventListener("beforeunload", endSession);
+    return () => {
+      endSession();
+      window.removeEventListener("beforeunload", endSession);
+    };
+  }, []);
   return <RouterProvider router={router} />;
 }
 
